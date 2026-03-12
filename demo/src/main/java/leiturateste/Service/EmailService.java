@@ -1,9 +1,9 @@
-package leituratest.demo;
+package leiturateste.Service;
 
 
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -16,16 +16,22 @@ public class EmailService {
     @Value("${spring.mail.username}")
     private String remetente;
 
-        public String enviarEmailTexto (String destinatario , String mensagem , String assunto) {
+        public ResponseEntity<String> enviarEmailTexto (String destinatario , String mensagem , String assunto) {
+
             try {
                 SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
                 simpleMailMessage.setFrom(remetente);
+                simpleMailMessage.setFrom(destinatario);
                 simpleMailMessage.setFrom(mensagem);
-            }catch ()
+                return ResponseEntity.ok("Email enviado");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return ResponseEntity.status(400).body("Não enviado");
+            }
+
+
+
         }
-
-
-
-
-
-}
